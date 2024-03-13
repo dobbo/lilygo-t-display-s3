@@ -2,27 +2,41 @@
 | ----------------- | ----- | -------- | -------- | -------- | -------- |
 # MCPWM RC Servo Control Example
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+This prject was created from the "ESP-IDF: Explorer" -> "New Project Wizard" for the
+ESP32-S3 microcontroller using the "MCPWM RC Servo Control Example" template.
 
-This example illustrates how to drive a typical [RC Servo](https://en.wikipedia.org/wiki/Servo_%28radio_control%29) by sending a PWM signal using the MCPWM driver. The PWM pulse has a frequency of 50Hz (period of 20ms), and the active-high time (which controls the rotation) ranges from 0.5s to 2.5ms with 1.5ms always being center of range.
+It is an example that illustrates how to drive a typical [RC Servo](https://en.wikipedia.org/wiki/Servo_%28radio_control%29) by sending a PWM signal using the MCPWM driver. The PWM pulse has a frequency of 50Hz (period of 20ms), and the active-high time (which controls the rotation) ranges from 0.5s to 2.5ms with 1.5ms always being center of range.
 
 ## How to Use Example
 
 ### Hardware Required
 
-* A development board with any Espressif SoC which features MCPWM peripheral (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.)
-* A USB cable for Power supply and programming
-* A RC servo motor, e.g. [SG90](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf)
+* A LILYGO T-Display-S3 ESP32-S3 1.9 inch ST7789 LCD Display TTGO Development Board (https://www.amazon.co.uk/dp/B09J112YR7) development board,
+* A USB cable for Power supply and programming, and
+* A RC servo motor, e.g. [SG90](http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf) or an [FS90R](https://www.amazon.co.uk/gp/product/B09K74X3MZ).
+
+Personally I think the FS90R is the better test option as, being a continual rotating device
+is is easier to see when working. An SG90 move is relativily small increments, so needsd more 
+careful observation.
 
 Connection :
 
 ```
-      ESP Board              Servo Motor      5V
-+-------------------+     +---------------+    ^
-|  SERVO_PULSE_GPIO +-----+PWM        VCC +----+
-|                   |     |               |
-|               GND +-----+GND            |
-+-------------------+     +---------------+
+ T-Display-S3             Servo Motor
++------------+         +-------------+
+|        VCC +-- 5v  --+ VCC (Red)   +
+|            |         |             |
+|        GND +-- GND --| GND(Brown)  |
+|            |         |             |
+|         NC |         |             |
+|            |         |             |
+|         NC |         |             |
+|            |         |             |
+|    GPIO 13 +-----+ PWM (Yellow)    |
+|            |         |             |
+|            |         |             |
+|            |         |             |
++------------+         +-------------+
 ```
 
 Note that, some kind of servo might need a higher current supply than the development board usually can provide. It's recommended to power the servo separately.
@@ -62,7 +76,8 @@ I (9345) example: Angle of rotation: 18
 ...
 ```
 
-The servo will rotate from -90 degree to 90 degree, and then turn back again.
+An SG90 servo will rotate from -90 degree to 90 degree, and then turn back again. An FG90R
+servo will first rotate anti-clockwise direction and then clockwise before repeating. 
 
 ## Troubleshooting
 
